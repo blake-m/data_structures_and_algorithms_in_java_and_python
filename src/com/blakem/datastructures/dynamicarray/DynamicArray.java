@@ -1,6 +1,6 @@
 /*
  * An implementation of dynamic array.
- * Huge thanks to William Fisset who is a great DS & Algorithms teacher.
+ * Huge thanks to William Fiset who is a great DS & Algorithms teacher.
  */
 package com.blakem.datastructures.dynamicarray;
 
@@ -79,13 +79,44 @@ public class DynamicArray<T> implements Iterable<T> {
         return elem_to_remove;
     }
 
-}
+    public boolean remove(Object obj) {
+        for (int i = 0; i < len; i++) {
+            if (arr[i].equals(obj)) {
+                removeAtIndex(i);
+                return true;
+            }
+        }
+        return false;
+    }
 
-// Removes a specified element
-// find the index of an element
-// check if contains
-// Override the iterator
-// -> add hasNext
-// -> add next
-// -> add remove
-// toString
+    public int indexOf(Object obj) {
+        for (int i = 0; i < len; i++) {
+            if (arr[i].equals(obj)) return i;
+        }
+        return -1;
+    }
+
+    public boolean contains(Object obj) {
+        return indexOf(obj) != -1;
+    }
+
+    // An iterative for loop is faster
+    @Override public java.util.Iterator<T> iterator() {
+        return new java.util.Iterator<T> () {
+            int index=0;
+            public boolean hasNext() { return index < len; }
+            public T next() { return arr[index++]; }
+        };
+    }
+
+    @Override public String toString() {
+        if (len == 0) return "[]";
+        else {
+            StringBuilder sb = new StringBuilder(len).append("[");
+            for (int i=0; i < len-1; i++) {
+                sb.append(arr[i] + ", ");
+            }
+            return sb.append(arr[len-1] + "]").toString();
+        }
+    }
+}
