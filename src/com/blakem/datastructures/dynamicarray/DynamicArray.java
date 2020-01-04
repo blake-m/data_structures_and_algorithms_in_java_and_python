@@ -47,7 +47,7 @@ public class DynamicArray<T> implements Iterable<T> {
         // If length + 1 is the same capacity: it's time to resize.
         // I double the size of the static array - it could be anything
         // else that increases the capacity of the array.
-        if (capacity == len+1) {
+        if (capacity == len+1 || capacity == 0) {
             if (capacity == 0) capacity = 1;
             else capacity *= 2;
             // Create a new static array (twice as big)
@@ -65,7 +65,7 @@ public class DynamicArray<T> implements Iterable<T> {
         if (remove_at >= len) {
             throw new IndexOutOfBoundsException();
         }
-        T elem_to_remove = arr[remove_at];
+        T elemToRemove = arr[remove_at];
         T[] changedArray = (T[]) new Object[len-1];
         for (int i = 0, j = 0; i < len; i++, j++) {
             if (i == remove_at) {
@@ -76,7 +76,7 @@ public class DynamicArray<T> implements Iterable<T> {
         }
         arr = changedArray;
         capacity = --len;
-        return elem_to_remove;
+        return elemToRemove;
     }
 
     public boolean remove(Object obj) {
