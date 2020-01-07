@@ -6,6 +6,8 @@
 
 package com.blakem.datastructures.doublylinkedlist;
 
+import java.util.List;
+
 public class DoublyLinkedList<T> implements Iterable<T> {
     private int size = 0;
     private Node<T> head = null;
@@ -33,12 +35,6 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     // Constructor: 1 element
     DoublyLinkedList(T firstElement) {
         addFirst(firstElement);
-    }
-
-    DoublyLinkedList(T[] listOfElements) {
-        for (T element: listOfElements) {
-            addLast(element);
-        };
     }
 
     // O(1)
@@ -141,7 +137,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     }
 
     boolean checkIfIndexIsCorrect(int index) {
-        if (index >= size) throw new IllegalArgumentException("Index out of scope.");
+        if (index >= size & size != 0) throw new IllegalArgumentException("Index out of scope.");
         if (index < 0) throw new IllegalArgumentException("Index smaller than 0.");
         return true;
     }
@@ -186,7 +182,24 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     }
 
     public void insertObjectAt(int index, T object) {
-        getNodeAtIndex(index);
+        if (this.size == 0) {
+            addFirst(object);
+        }
+
+        Node<T> nextNode = getNodeAtIndex(index);
+        Node<T> previousNode = nextNode.prev;
+
+        if (previousNode == null) {
+            Node<T> newNode = new Node<T>(object, null, nextNode);
+            nextNode.prev = newNode;
+            this.head = newNode;
+        } else {
+            Node<T> newNode = new Node<T>(object, previousNode, nextNode);
+            nextNode.prev = newNode;
+            previousNode.next = newNode;
+        }
+
+        this.size++;
     }
 
     @Override

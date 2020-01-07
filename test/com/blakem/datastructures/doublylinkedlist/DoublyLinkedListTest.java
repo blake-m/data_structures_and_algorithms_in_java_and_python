@@ -8,14 +8,14 @@ class DoublyLinkedListTest {
 
     @Test
     void initializeEmptyListTest() {
+        var emptyLinkedList = new DoublyLinkedList<String>();
+        assertEquals(0, emptyLinkedList.getSize());
     }
 
     @Test
     void initializeWithOneElementTest() {
-    }
-
-    @Test
-    void initializeWithListOfElementTest() {
+        var linkedList = new DoublyLinkedList<String>("Element");
+        assertEquals(linkedList.checkFirst(), "Element");
     }
 
 
@@ -114,7 +114,7 @@ class DoublyLinkedListTest {
     @Test
     void removeFirstThrowsEmptyListExceptionTest() {
         var dLL = new DoublyLinkedList<String>();
-        assertThrows(RuntimeException.class , dLL::removeFirst, "This list is EMPTY.");
+        assertThrows(RuntimeException.class, dLL::removeFirst, "This list is EMPTY.");
     }
 
     @Test
@@ -132,7 +132,7 @@ class DoublyLinkedListTest {
     @Test
     void removeLastThrowsEmptyListExceptionTest() {
         var dLL = new DoublyLinkedList<String>();
-        assertThrows(RuntimeException.class , dLL::removeLast, "This list is EMPTY.");
+        assertThrows(RuntimeException.class, dLL::removeLast, "This list is EMPTY.");
     }
 
 
@@ -198,8 +198,8 @@ class DoublyLinkedListTest {
         assertEquals("Elem 1", dLL.checkAt(10));
         dLL.insertObjectAt(8, "Elem 2");
         assertEquals("Elem 2", dLL.checkAt(8));
-        dLL.insertObjectAt(1, "Elem 3");
-        assertEquals("Elem 3", dLL.checkAt(1));
+        dLL.insertObjectAt(3, "Elem 3");
+        assertEquals("Elem 3", dLL.checkAt(3));
     }
 
     @Test
@@ -215,22 +215,6 @@ class DoublyLinkedListTest {
     }
 
     @Test
-    void insertObjectAtInsertAtTheEndTest() {
-        var dLL = new DoublyLinkedList<String>();
-        int i = 0;
-        while (i < 25) {
-            dLL.addLast("Elem " + i);
-            i++;
-        }
-        dLL.insertObjectAt(25, "Elem 1");
-        assertEquals("Elem 1", dLL.checkLast());
-    }
-
-    @Test
-    void iteratorTest() {
-    }
-
-    @Test
     void testToStringTest() {
         var dLL = new DoublyLinkedList<String>();
         int i = 0;
@@ -240,14 +224,5 @@ class DoublyLinkedListTest {
         }
         String dLLString = dLL.toString();
         assertEquals("[Elem 0, Elem 1, Elem 2, Elem 3, Elem 4,  ]", dLLString);
-    }
-
-
-    @Test
-    void forEachTest() {
-    }
-
-    @Test
-    void spliteratorTest() {
     }
 }
