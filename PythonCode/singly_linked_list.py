@@ -1,4 +1,7 @@
-# Singly Linked List
+# Basic implementation of Singly Linked List with head tracking only
+# - this is not a complete implementation - just basic methods
+# - this implementation contains unittests
+
 
 class Element(object):
     def __init__(self, value):
@@ -11,6 +14,8 @@ class LinkedList(object):
         self.head = head
         if self.head:
             self.size = 1
+        else:
+            self.size = 0
 
     def append(self, new_element):
         current_head = self.head
@@ -67,36 +72,3 @@ class LinkedList(object):
                 break
             current_element = current_element.next
         self.size -= 1
-
-
-# Test cases
-# Set up some Elements
-e1 = Element(1)
-e2 = Element(2)
-e3 = Element(3)
-e4 = Element(4)
-
-# Start setting up a LinkedList
-ll = LinkedList(e1)
-ll.append(e2)
-ll.append(e3)
-
-# Test get_position
-# Should print 3
-print(ll.head.next.next.value)
-# Should also print 3
-print(ll.get_position(3).value)
-
-# Test insert
-ll.insert(e4, 3)
-# Should print 4 now
-print(ll.get_position(3).value)
-
-# Test delete
-ll.delete(1)
-# Should print 2 now
-print(ll.get_position(1).value)
-# Should print 4 now
-print(ll.get_position(2).value)
-# Should print 3 now
-print(ll.get_position(3).value)

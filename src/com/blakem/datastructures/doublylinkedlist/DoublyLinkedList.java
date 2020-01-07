@@ -41,8 +41,6 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         };
     }
 
-    // I could implement constructors for more elements - I'll skip for now
-
     // O(1)
     public int getSize() {
         return size;
@@ -106,6 +104,12 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return tail.data;
     }
 
+    public T checkAt(int index) {
+        if (isEmpty()) throw new RuntimeException("This list is EMPTY.");
+        T dataAtIndex = getNodeAtIndex(index).data;
+        return dataAtIndex;
+    }
+
     // Remove the first value at the head of the linked list, O(1)
     public T removeFirst() {
         if (isEmpty()) throw new RuntimeException("This list is EMPTY.");
@@ -136,30 +140,54 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return removedElement;
     }
 
-    private boolean checkIfIndexIsCorrect(int index) {
+    boolean checkIfIndexIsCorrect(int index) {
         if (index >= size) throw new IllegalArgumentException("Index out of scope.");
         if (index < 0) throw new IllegalArgumentException("Index smaller than 0.");
         return true;
     }
 
-//    private Node<T> getNodeAtIndex(int index) {
-//        checkIfIndexIsCorrect(index);
-//        Node<T> finalNode = head;
-//        for (int i = 0; i < index; i++) {
-//
-//        }
-//        return finalNode;
-//    }
-//
-//    // O(n)
-//    public T removeAt(int index) {
-//        getNodeAtIndex(index);
-//        return null;
-//    }
-//
-//    public void insertObjectAt(int index, T object) {
-//        getNodeAtIndex(index);
-//    }
+    private Node<T> getNodeAtIndex(int index) {
+        checkIfIndexIsCorrect(index);
+        Node<T> finalNode = this.head;
+        for (int i = 0; i < index; i++) {
+            finalNode = finalNode.next;
+        }
+        return finalNode;
+    }
+
+    // O(n)
+    // TO DO: Check this one - it's wrong
+    public T removeAt(int index) {
+        Node<T> nodeToRemove = getNodeAtIndex(index);
+
+        if (nodeToRemove.prev != null) {
+            Node<T> previousNode = nodeToRemove.prev;
+            previousNode.next = nodeToRemove.next;
+        } else {
+            this.head = nodeToRemove.next;
+            Node<T> previousNode = null;
+        }
+
+        if (nodeToRemove.next != null) {
+            Node<T> nextNode = nodeToRemove.next;
+            nextNode.prev = nodeToRemove.prev;
+        } else {
+            this.tail = nodeToRemove.prev;
+            this.tail.next = null;
+        }
+
+        T removedData = nodeToRemove.data;
+        nodeToRemove.data = null;
+        nodeToRemove.prev = nodeToRemove.next = null;
+
+        this.size--;
+
+        return removedData;
+    }
+
+    public void insertObjectAt(int index, T object) {
+        getNodeAtIndex(index);
+    }
 
     @Override
     public java.util.Iterator<T> iterator() {
@@ -188,7 +216,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[ ");
+        sb.append("[");
         Node<T> trav = head;
         while (trav != null) {
             sb.append(trav.data).append(", ");
@@ -198,12 +226,4 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return sb.toString();
     }
 
-}
-
-class doubleLinkedListInstance {
-    public static void main(String[] args) {
-        int[] integerArray= {3, 5, 5};
-        DoublyLinkedList<int[]> dll = new DoublyLinkedList<int[]>(integerArray);
-        System.out.println(dll);
-    }
 }
