@@ -4,6 +4,7 @@
 # Mine
 DS&A.iml
 .idea/
+PythonCode/__pycache__/
 
 # User-specific stuff
 .idea/**/workspace.xml

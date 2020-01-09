@@ -75,7 +75,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         size++;
     }
 
-    // Empty this linked list, O(n)
+    // O(n)
     public void clear() {
         while (this.head.next != null) {
             Node<T> next = this.head.next;
@@ -152,7 +152,6 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     }
 
     // O(n)
-    // TO DO: Check this one - it's wrong
     public T removeAt(int index) {
         Node<T> nodeToRemove = getNodeAtIndex(index);
 
