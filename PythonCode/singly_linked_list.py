@@ -9,7 +9,7 @@ class Element(object):
         self.next = None
 
 
-class LinkedList(object):
+class SinglyLinkedList(object):
     def __init__(self, head=None):
         self.head = head
         if self.head:
@@ -72,3 +72,25 @@ class LinkedList(object):
                 break
             current_element = current_element.next
         self.size -= 1
+
+    def remove_last(self):
+        """Delete the last node and return its value."""
+        value_to_return = None
+        previous_element = None
+        current_element = self.head
+        current_position = 1
+
+        while current_position < self.size:
+            previous_element = current_element
+            current_element = current_element.next
+            current_position += 1
+
+        value_to_return = current_element.value
+        current_element = None
+        if previous_element:
+            previous_element.next = None
+        else:
+            self.head = None
+        self.size -= 1
+
+        return value_to_return

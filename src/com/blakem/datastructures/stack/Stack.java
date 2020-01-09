@@ -4,10 +4,6 @@
  * and further reference.
  */
 
-
-
-// TO DO: Add comments everywhere
-
 package com.blakem.datastructures.stack;
 
 import java.util.Iterator;

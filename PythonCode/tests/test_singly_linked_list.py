@@ -1,7 +1,7 @@
-import unittest
-
-from singly_linked_list import Element, LinkedList
+from singly_linked_list import Element, SinglyLinkedList
 from unittest import TestCase
+
+from unittest import main as unittest_main
 
 
 class TestSinglyLinkedList(TestCase):
@@ -19,25 +19,25 @@ class TestSinglyLinkedList(TestCase):
         self.assertIsNotNone(element1.next)
 
     def test_initialize_empty_linked_list(self):
-        ll = LinkedList()
+        ll = SinglyLinkedList()
         self.assertIsNone(ll.head)
         self.assertEqual(ll.size, 0)
 
     def test_initialize_linked_list_with_an_element(self):
         element1 = Element('Value1')
-        ll = LinkedList(element1)
+        ll = SinglyLinkedList(element1)
         self.assertEqual(ll.head.value, 'Value1')
         self.assertEqual(ll.size, 1)
 
     def test_append_with_empty_linked_list(self):
-        ll = LinkedList()
+        ll = SinglyLinkedList()
         element1 = Element('Value1')
         ll.append(element1)
         self.assertEqual(ll.head.value, 'Value1')
 
     def test_get_position(self):
         element1 = Element('Value1')
-        ll = LinkedList(element1)
+        ll = SinglyLinkedList(element1)
         element2 = Element('Value2')
         element3 = Element('Value3')
         element1.next = element2
@@ -48,7 +48,7 @@ class TestSinglyLinkedList(TestCase):
         element1 = Element('Value1')
         element2 = Element('Value2')
         element3 = Element('Value3')
-        ll = LinkedList(element1)
+        ll = SinglyLinkedList(element1)
         ll.append(element2)
         ll.append(element3)
         self.assertEqual(ll.head.value, 'Value1')
@@ -59,7 +59,7 @@ class TestSinglyLinkedList(TestCase):
         element1 = Element('Value1')
         element2 = Element('Value2')
         element3 = Element('Value3')
-        ll = LinkedList(element2)
+        ll = SinglyLinkedList(element2)
         ll.append(element3)
         ll.insert(element1, 1)
         self.assertEqual(ll.get_position(1).value, 'Value1')
@@ -68,7 +68,7 @@ class TestSinglyLinkedList(TestCase):
         element1 = Element('Value1')
         element2 = Element('Value2')
         element3 = Element('Value3')
-        ll = LinkedList(element2)
+        ll = SinglyLinkedList(element2)
         ll.append(element3)
         ll.insert(element1, 2)
         self.assertEqual(ll.get_position(2).value, 'Value1')
@@ -77,12 +77,23 @@ class TestSinglyLinkedList(TestCase):
         element1 = Element('Value1')
         element2 = Element('Value2')
         element3 = Element('Value3')
-        ll = LinkedList(element1)
+        ll = SinglyLinkedList(element1)
         ll.append(element2)
         ll.append(element3)
         ll.delete('Value2')
         self.assertNotEqual(ll.get_position(2).value, 'Value2')
 
+    def test_remove_last(self):
+        element1 = Element('Value1')
+        element2 = Element('Value2')
+        element3 = Element('Value3')
+        ll = SinglyLinkedList(element1)
+        ll.append(element2)
+        ll.append(element3)
+        returned_value = ll.remove_last()
+        self.assertEqual(returned_value, 'Value3')
+        self.assertEqual(ll.size, 2)
+
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest_main()
