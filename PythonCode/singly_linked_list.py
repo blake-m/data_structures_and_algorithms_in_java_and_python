@@ -1,96 +1,76 @@
-# Basic implementation of Singly Linked List with head tracking only
-# - this is not a complete implementation - just basic methods
-# - this implementation contains unittests
+from typing import Any, Optional
 
 
-class Element(object):
-    def __init__(self, value):
-        self.value = value
-        self.next = None
+class SinglyLinkedList:
+    def __init__(self, first_element: Optional["SinglyLinkedList.Node"] = None):
+        self.__size: int = 0
+        self.__head: None
+        self.__tail: None
 
+    class Node:
+        def __init__(
+                self,
+                data: Optional[Any] = None,
+                next_: Optional["SinglyLinkedList.Node"] = None
+        ) -> None:
+            self.data: Any = data
+            self.next: "SinglyLinkedList.Node" = next_
 
-class SinglyLinkedList(object):
-    def __init__(self, head=None):
-        self.head = head
-        if self.head:
-            self.size = 1
+        def __str__(self):
+            return str(self.data)
+
+    @property
+    def size(self) -> int:
+        return self.__size
+
+    def is_empty(self) -> bool:
+        return self.__size == 0
+
+    def add_first(self, data: Any):
+        if self.is_empty():
+            node_to_add = SinglyLinkedList.Node(data)
+            self.__head = node_to_add
+            self.__tail = node_to_add
         else:
-            self.size = 0
+            pass
+        self.__size += 1
+        pass
 
-    def append(self, new_element):
-        current_head = self.head
-        if self.head:
-            while current_head.next:
-                current_head = current_head.next
-            current_head.next = new_element
-        else:
-            self.head = new_element
-        self.size += 1
+    def add_last(self):
+        pass
 
-    def get_position(self, position):
-        """Get an element from a particular position.
-        Assume the first position is "1".
-        Return "None" if position is not in the list."""
-        if position < 1:
-            return None
-        current_element = self.head
-        current_position = 1
-        try:
-            while current_position < position:
-                current_element = current_element.next
-                current_position += 1
-            return current_element
-        except Exception as e:
-            print(e)
-            return None
+    def clear(self):
+        pass
 
-    def insert(self, new_element, position):
-        """Insert a new node at the given position.
-        Assume the first position is "1".
-        Inserting at position 3 means between
-        the 2nd and 3rd elements."""
-        current_element_at_given_position = self.get_position(position)
-        previous_element = self.get_position(position - 1)
-        new_element.next = current_element_at_given_position
-        if previous_element:
-            previous_element.next = new_element
-        else:
-            self.head = new_element
-        self.size += 1
+    def __check_if_index_is_correct(self):
+        pass
 
-    def delete(self, value):
-        """Delete the first node with a given value."""
-        current_element = self.head
-        for i in range(1, self.size + 1):
-            if current_element.value == value:
-                next_element = current_element.next
-                previous_element = self.get_position(i - 1)
-                if previous_element:
-                    previous_element.next = next_element
-                else:
-                    self.head = next_element
-                break
-            current_element = current_element.next
-        self.size -= 1
+    def __get_node_at_index(self):
+        pass
+
+    def check_first(self):
+        pass
+
+    def check_last(self):
+        pass
+
+    def check_at_index(self):
+        pass
+
+    def remove_first(self):
+        pass
 
     def remove_last(self):
-        """Delete the last node and return its value."""
-        value_to_return = None
-        previous_element = None
-        current_element = self.head
-        current_position = 1
+        pass
 
-        while current_position < self.size:
-            previous_element = current_element
-            current_element = current_element.next
-            current_position += 1
+    def remove_at_index(self):
+        pass
 
-        value_to_return = current_element.value
-        current_element = None
-        if previous_element:
-            previous_element.next = None
-        else:
-            self.head = None
-        self.size -= 1
+    def insert_object_at(self):
+        pass
 
-        return value_to_return
+    def __iter__(self):
+        pass
+
+    def __str__(self):
+        pass

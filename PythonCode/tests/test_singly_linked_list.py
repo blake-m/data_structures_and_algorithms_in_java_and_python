@@ -1,99 +1,41 @@
-from singly_linked_list import Element, SinglyLinkedList
-from unittest import TestCase
+import unittest
 
-from unittest import main as unittest_main
+from singly_linked_list import SinglyLinkedList
 
 
-class TestSinglyLinkedList(TestCase):
-    def test_initialize_element(self):
-        element1 = Element('Value1')
-        self.assertEqual(element1.value, 'Value1')
-        self.assertIsNone(element1.next)
+class TestSinglyLinkedListNode(unittest.TestCase):
+    def setUp(self) -> None:
+        self.node = SinglyLinkedList.Node('Some Data')
+        self.another_node = SinglyLinkedList.Node('Some Data', self.node)
 
-    def test_initialize_element_with_next_element(self):
-        element1 = Element('Value1')
-        element2 = Element('Value2')
-        element1.next = element2
-        self.assertEqual(element1.value, 'Value1')
-        self.assertEqual(element1.next.value, 'Value2')
-        self.assertIsNotNone(element1.next)
+    def test__str__(self):
+        self.assertEqual(str(self.node), 'Some Data')
 
-    def test_initialize_empty_linked_list(self):
-        ll = SinglyLinkedList()
-        self.assertIsNone(ll.head)
-        self.assertEqual(ll.size, 0)
+    def test_link_with_another_node(self):
+        self.assertEqual(self.another_node.data, self.another_node.next.data)
 
-    def test_initialize_linked_list_with_an_element(self):
-        element1 = Element('Value1')
-        ll = SinglyLinkedList(element1)
-        self.assertEqual(ll.head.value, 'Value1')
-        self.assertEqual(ll.size, 1)
 
-    def test_append_with_empty_linked_list(self):
-        ll = SinglyLinkedList()
-        element1 = Element('Value1')
-        ll.append(element1)
-        self.assertEqual(ll.head.value, 'Value1')
+class TestSinglyLinkedList(unittest.TestCase):
+    def setUp(self) -> None:
+        self.sll = SinglyLinkedList()
 
-    def test_get_position(self):
-        element1 = Element('Value1')
-        ll = SinglyLinkedList(element1)
-        element2 = Element('Value2')
-        element3 = Element('Value3')
-        element1.next = element2
-        element2.next = element3
-        self.assertEqual(ll.get_position(3).value, 'Value3')
+    def test_size(self):
+        self.assertEqual(self.sll.size, 0)
 
-    def test_append_list_with_elements(self):
-        element1 = Element('Value1')
-        element2 = Element('Value2')
-        element3 = Element('Value3')
-        ll = SinglyLinkedList(element1)
-        ll.append(element2)
-        ll.append(element3)
-        self.assertEqual(ll.head.value, 'Value1')
-        self.assertEqual(ll.get_position(2).value, 'Value2')
-        self.assertEqual(ll.get_position(3).value, 'Value3')
+    def test_size_cannot_be_changed(self):
+        with self.assertRaises(AttributeError):
+            self.sll.size = 53
 
-    def test_insert_at_the_beginning(self):
-        element1 = Element('Value1')
-        element2 = Element('Value2')
-        element3 = Element('Value3')
-        ll = SinglyLinkedList(element2)
-        ll.append(element3)
-        ll.insert(element1, 1)
-        self.assertEqual(ll.get_position(1).value, 'Value1')
+    def test_is_empty(self):
+        self.assertTrue(self.sll.size == 0)
 
-    def test_insert_in_the_middle(self):
-        element1 = Element('Value1')
-        element2 = Element('Value2')
-        element3 = Element('Value3')
-        ll = SinglyLinkedList(element2)
-        ll.append(element3)
-        ll.insert(element1, 2)
-        self.assertEqual(ll.get_position(2).value, 'Value1')
+    def add_first(self):
+        self.sll.add_first()
+        pass
 
-    def test_delete(self):
-        element1 = Element('Value1')
-        element2 = Element('Value2')
-        element3 = Element('Value3')
-        ll = SinglyLinkedList(element1)
-        ll.append(element2)
-        ll.append(element3)
-        ll.delete('Value2')
-        self.assertNotEqual(ll.get_position(2).value, 'Value2')
 
-    def test_remove_last(self):
-        element1 = Element('Value1')
-        element2 = Element('Value2')
-        element3 = Element('Value3')
-        ll = SinglyLinkedList(element1)
-        ll.append(element2)
-        ll.append(element3)
-        returned_value = ll.remove_last()
-        self.assertEqual(returned_value, 'Value3')
-        self.assertEqual(ll.size, 2)
+# Remember about this flashcard: Handling Expected Failures
 
 
 if __name__ == '__main__':
-    unittest_main()
+    unittest.main()
