@@ -237,5 +237,4 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         sb.append(" ]");
         return sb.toString();
     }
-
 }

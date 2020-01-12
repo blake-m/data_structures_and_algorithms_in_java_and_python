@@ -5,6 +5,8 @@
 DS&A.iml
 .idea/
 PythonCode/__pycache__/
+PythonCode/.mypy_cache/
+/lib
 
 # User-specific stuff
 .idea/**/workspace.xml
