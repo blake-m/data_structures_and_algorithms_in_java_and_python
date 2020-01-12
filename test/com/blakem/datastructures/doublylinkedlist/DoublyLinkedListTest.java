@@ -1,10 +1,21 @@
 package com.blakem.datastructures.doublylinkedlist;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class DoublyLinkedListTest {
+    private DoublyLinkedList<String> dLL;
+
+    @BeforeEach
+    void setUp() {
+        dLL = new DoublyLinkedList<String>();
+    }
 
     @Test
     void initializeEmptyListTest() {
@@ -21,14 +32,12 @@ class DoublyLinkedListTest {
 
     @Test
     void getSizeWithEmptyListTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.addFirst("element");
         assertFalse(dLL.isEmpty());
     }
 
     @Test
     void getSizeWithElementsTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.addFirst("element");
         dLL.addFirst("element");
         dLL.addFirst("element");
@@ -37,21 +46,18 @@ class DoublyLinkedListTest {
 
     @Test
     void isEmptyWithEmptyListTest() {
-        var dLL = new DoublyLinkedList<String>();
         assertEquals(0, dLL.getSize());
 
     }
 
     @Test
     void isEmptyWithElementsTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.addFirst("element");
         assertFalse(dLL.isEmpty());
     }
 
     @Test
     void addFirstTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.addFirst("Elem 1");
         assertEquals("Elem 1", dLL.checkFirst());
         dLL.addFirst("Elem 2");
@@ -63,7 +69,6 @@ class DoublyLinkedListTest {
 
     @Test
     void addLastTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.addLast("Elem 1");
         assertEquals("Elem 1", dLL.checkLast());
         dLL.addLast("Elem 2");
@@ -75,7 +80,6 @@ class DoublyLinkedListTest {
 
     @Test
     void clearTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -87,21 +91,18 @@ class DoublyLinkedListTest {
 
     @Test
     void checkFirstTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.addFirst("Elem 1");
         assertEquals("Elem 1", dLL.checkFirst());
     }
 
     @Test
     void checkLastTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.addLast("Elem 1");
         assertEquals("Elem 1", dLL.checkLast());
     }
 
     @Test
     void removeFirstTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -111,15 +112,20 @@ class DoublyLinkedListTest {
         assertEquals("Elem 0", removedElement);
     }
 
+    // Learning purposes comment: 1st way of checking for exceptions
     @Test
     void removeFirstThrowsEmptyListExceptionTest() {
-        var dLL = new DoublyLinkedList<String>();
-        assertThrows(RuntimeException.class, dLL::removeFirst, "This list is EMPTY.");
+        try {
+            dLL.removeFirst();
+            fail("Exception wasn't thrown");
+        } catch (RuntimeException exception) {
+            assertEquals("This list is EMPTY.", exception.getMessage());
+        }
+
     }
 
     @Test
     void removeLastTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -129,16 +135,15 @@ class DoublyLinkedListTest {
         assertEquals("Elem 24", removedElement);
     }
 
+    // Learning purposes comment: 2nd way of checking for exceptions
     @Test
     void removeLastThrowsEmptyListExceptionTest() {
-        var dLL = new DoublyLinkedList<String>();
-        assertThrows(RuntimeException.class, dLL::removeLast, "This list is EMPTY.");
+        assertThrows(RuntimeException.class, dLL::removeLast);
     }
 
 
     @Test
     void removeAtReturnsRemovedDataTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -149,7 +154,6 @@ class DoublyLinkedListTest {
 
     @Test
     void removeAtRemovesElementAtTheEndTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -162,7 +166,6 @@ class DoublyLinkedListTest {
 
     @Test
     void removeAtRemovesElementInTheMiddleTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -175,7 +178,6 @@ class DoublyLinkedListTest {
 
     @Test
     void removeAtRemovesElementAtTheBeginningTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -188,7 +190,6 @@ class DoublyLinkedListTest {
 
     @Test
     void insertObjectAtInsertInTheMiddleTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 25) {
             dLL.addLast("Elem " + i);
@@ -204,7 +205,6 @@ class DoublyLinkedListTest {
 
     @Test
     void insertObjectAtInsertAtTheBeginningTest() {
-        var dLL = new DoublyLinkedList<String>();
         dLL.insertObjectAt(0, "Elem 1");
         assertEquals("Elem 1", dLL.checkFirst());
         dLL.insertObjectAt(0, "Elem 2");
@@ -216,7 +216,6 @@ class DoublyLinkedListTest {
 
     @Test
     void testToStringTest() {
-        var dLL = new DoublyLinkedList<String>();
         int i = 0;
         while (i < 5) {
             dLL.addLast("Elem " + i);

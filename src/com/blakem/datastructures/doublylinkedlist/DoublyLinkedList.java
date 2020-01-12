@@ -6,8 +6,6 @@
 
 package com.blakem.datastructures.doublylinkedlist;
 
-import java.util.List;
-
 public class DoublyLinkedList<T> implements Iterable<T> {
     private int size = 0;
     private Node<T> head = null;
@@ -89,26 +87,35 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     }
 
     // O(1)
-    public T checkFirst() {
-        if (isEmpty()) throw new RuntimeException("This list is EMPTY.");
+    public T checkFirst() throws RuntimeException {
+        if (isEmpty()) {
+            throw new RuntimeException("This list is EMPTY.");
+        }
         return head.data;
     }
 
     // O(1)
-    public T checkLast() {
-        if (isEmpty()) throw new RuntimeException("This list is EMPTY.");
+    public T checkLast() throws RuntimeException {
+        if (isEmpty()) {
+            throw new RuntimeException("This list is EMPTY.");
+        }
         return tail.data;
     }
 
-    public T checkAt(int index) {
-        if (isEmpty()) throw new RuntimeException("This list is EMPTY.");
+    // O(1)
+    public T checkAt(int index) throws RuntimeException {
+        if (isEmpty()) {
+            throw new RuntimeException("This list is EMPTY.");
+        }
         T dataAtIndex = getNodeAtIndex(index).data;
         return dataAtIndex;
     }
 
-    // Remove the first value at the head of the linked list, O(1)
-    public T removeFirst() {
-        if (isEmpty()) throw new RuntimeException("This list is EMPTY.");
+    // O(1)
+    public T removeFirst() throws RuntimeException {
+        if (isEmpty()) {
+            throw new RuntimeException("This list is EMPTY.");
+        }
 
         T removedElement = this.head.data;
         this.head = this.head.next;
@@ -121,9 +128,11 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return removedElement;
     }
 
-    // (1)
-    public T removeLast() {
-        if (isEmpty()) throw new RuntimeException("This list is EMPTY.");
+    // O(1)
+    public T removeLast() throws RuntimeException {
+        if (isEmpty()) {
+            throw new RuntimeException("This list is EMPTY.");
+        }
 
         T removedElement = this.tail.data;
         this.tail = this.tail.prev;
@@ -136,12 +145,17 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return removedElement;
     }
 
-    boolean checkIfIndexIsCorrect(int index) {
-        if (index >= size & size != 0) throw new IllegalArgumentException("Index out of scope.");
-        if (index < 0) throw new IllegalArgumentException("Index smaller than 0.");
-        return true;
+    // O(1)
+    void checkIfIndexIsCorrect(int index) throws IllegalArgumentException {
+        if (index >= size & size != 0) {
+            throw new IllegalArgumentException("Index out of scope.");
+        }
+        if (index < 0) {
+            throw new IllegalArgumentException("Index smaller than 0.");
+        }
     }
 
+    // O(n)
     private Node<T> getNodeAtIndex(int index) {
         checkIfIndexIsCorrect(index);
         Node<T> finalNode = this.head;
@@ -180,6 +194,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return removedData;
     }
 
+    // O(n)
     public void insertObjectAt(int index, T object) {
         if (this.size == 0) {
             addFirst(object);
