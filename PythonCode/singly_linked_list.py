@@ -28,7 +28,7 @@ class SinglyLinkedList:
     def size(self) -> int:
         return self.__size
 
-    def ___len__(self) -> int:
+    def __len__(self) -> int:
         return self.size
 
     def is_empty(self) -> bool:
@@ -112,11 +112,13 @@ class SinglyLinkedList:
         self.__raise_index_error_if_list_is_empty()
 
         removed_data = self.__tail.data
-
-        # In a singly linked list you don't know what the previous item was.
-        # Therefore you need to traverse the whole list to get to the second to last item.
-        second_to_last_node = self.__get_node_at_index(self.__size-2)
-        self.__tail = second_to_last_node
+        if self.__size == 1:
+            self.__head = self.__tail = None
+        else:
+            # In a singly linked list you don't know what the previous item was.
+            # Therefore you need to traverse the whole list to get to the second to last item.
+            second_to_last_node = self.__get_node_at_index(self.__size-2)
+            self.__tail = second_to_last_node
 
         self.__size -= 1
 
