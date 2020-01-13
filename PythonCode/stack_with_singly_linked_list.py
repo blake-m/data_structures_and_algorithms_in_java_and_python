@@ -3,7 +3,7 @@ from typing import Any
 
 
 class Stack:
-    def __init__(self, first_element=None):
+    def __init__(self, first_element: Any = None):
         self.stack_list = SinglyLinkedList()
         if first_element:
             self.stack_list.append(first_element)

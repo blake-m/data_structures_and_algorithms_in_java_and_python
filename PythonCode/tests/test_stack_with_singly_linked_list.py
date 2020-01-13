@@ -1,4 +1,4 @@
-from singly_linked_list import Element, SinglyLinkedList
+from singly_linked_list import SinglyLinkedList
 from unittest import TestCase
 
 from unittest import main as unittest_main
