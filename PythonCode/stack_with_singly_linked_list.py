@@ -30,3 +30,6 @@ class Stack:
 
     def __str__(self) -> str:
         return str(self.__stack_list)
+
+    def __iter__(self):
+        return iter(self.__stack_list)

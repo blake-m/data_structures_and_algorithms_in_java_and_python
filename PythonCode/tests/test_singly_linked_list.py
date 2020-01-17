@@ -87,6 +87,9 @@ class TestSinglyLinkedListEmpty(unittest.TestCase):
         sll = SinglyLinkedList(5.1241)
         self.assertEqual(sll._SinglyLinkedList__head.data, 5.1241)
 
+    def test_check_last(self):
+        self.assertIsNone(self.sll.check_last())
+
 
 class TestSinglyLinkedListWithItems(unittest.TestCase):
     def setUp(self):

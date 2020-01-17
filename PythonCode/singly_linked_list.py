@@ -89,7 +89,9 @@ class SinglyLinkedList:
         return self.__head.data
 
     def check_last(self) -> Any:
-        return self.__tail.data
+        if self.__tail:
+            return self.__tail.data
+        return None
 
     def check_at_index(self, index: int) -> Any:
         return self[index]
