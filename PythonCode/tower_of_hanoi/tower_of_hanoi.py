@@ -18,46 +18,6 @@ from __future__ import annotations
 from typing import Optional, Tuple
 from stack_with_singly_linked_list import Stack
 
-
-class Disk:
-    def __init__(self, size: int) -> None:
-        self.__size = size
-
-    @property
-    def size(self) -> int:
-        return self.__size
-
-    def check_if_size_of_disk_below_is_correct(self, disk_below: Optional[Disk]) -> bool:
-        if not disk_below:  # Evaluates to True if there's no disk below
-            return True
-        if disk_below.size > self.size:
-            return True
-        return False
-
-    def __str__(self):
-        return str(self.size)
-
-
-class Rod(Stack):
-    def __init__(self, name: str, first_element: Optional[Disk] = None) -> None:
-        super().__init__(first_element)
-        self.__name = name
-
-    def push_disk_on_top(self, disk: Disk) -> bool:
-        current_top_disk = self.peek_element_from_top()
-        print('Top disk', current_top_disk)
-        if disk.check_if_size_of_disk_below_is_correct(current_top_disk):
-            super().push_element_on_top(disk)
-            return True
-        return False
-
-    @property
-    def name(self):
-        return self.__name
-
-
-
-
 class Game:
     """
 
@@ -179,7 +139,7 @@ class TextGUI:
 def main():
     # TODO: you implemented __iter__ in stack - test it
     # TODO: When you Move object from 1 rod to another it seems to get copied, not moved - fix
-    game = Game(10)
+    game = Game(12)
     gui = TextGUI(game)
     while not game.check_if_right_rod_full_and_others_empty():
         gui.print_current_state()
