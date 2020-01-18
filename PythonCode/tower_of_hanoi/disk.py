@@ -10,22 +10,25 @@ class Disk:
     def size(self) -> int:
         return self.__size
 
-    @staticmethod
-    def check_if_there_is_disk_below(disk_below: Optional[Disk]) -> bool:
-        if disk_below:
-            return True
-        return False
+    def check_if_disk_below_exists_and_or_is_bigger(self, disk_below: Optional[Disk]) -> bool:
+        """Returns True if disk can be moved onto a specified rod.
 
-    def check_if_disk_below_is_bigger(self, disk_below: Optional[Disk]) -> bool:
-        if disk_below.size > self.size:
-            return True
-        return False
+        Takes a disk from a rod to which the current disk is supposed to be
+        moved to. 3 Cases here:
+        1.  Checks if this disk exists. If it doesn't - returns True -
+            in Tower of Hanoi disks can be always moved to empty rods.
+        2.  If the disk below exists and is bigger - returns True.
+        3.  If the disk below exists and is smaller - returns False.
 
-    def check_if_disk_can_be_moved_onto_specified_rod(self, disk_below: Optional[Disk]) -> bool:
-        if (not self.check_if_there_is_disk_below(disk_below)
-                and self.check_if_disk_below_is_bigger(disk_below)):
-            return True
-        return False
+        :param disk_below: peeked from the rod onto which the current disk
+            is supposed to be moved to.
+        """
+        try:
+            if disk_below.size > self.size:
+                return True
+            return False
+        except AttributeError:
+            return True   # Disk below doesn't exist
 
     def __str__(self):
         return str(self.size)
