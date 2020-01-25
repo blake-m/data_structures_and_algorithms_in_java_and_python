@@ -1,4 +1,4 @@
-package com.blakem.datastructures.mockstubexample;
+package mockstubexample;
 
 import java.time.LocalDate;
 import java.util.List;

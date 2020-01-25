@@ -1,4 +1,4 @@
-package com.blakem.datastructures.mockstubexample;
+package mockstubexample;
 
 import java.math.BigDecimal;
 

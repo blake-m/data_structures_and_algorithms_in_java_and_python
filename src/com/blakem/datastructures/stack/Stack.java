@@ -1,8 +1,4 @@
-/**
- * An implementation of a stack with a doubly linked list.
- * Comments here are not necessary - just for learning purpose
- * and further reference.
- */
+/* An implementation of a stack with a doubly linked list. */
 
 package com.blakem.datastructures.stack;
 

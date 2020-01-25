@@ -1,9 +1,8 @@
-package com.blakem.datastructures.mockstubexample;
+package mockstubexample;
 
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
