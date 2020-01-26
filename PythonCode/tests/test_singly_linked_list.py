@@ -160,6 +160,10 @@ class TestSinglyLinkedListWithItems(unittest.TestCase):
         self.sll.remove_last()
         self.assertEqual(self.sll.size, start_size-1)
 
+    def test_remove_last_new_last_node_points_to_none(self):
+        self.sll.remove_last()
+        self.assertIsNone(self.sll._SinglyLinkedList__tail.next)
+
     def test_remove_at_index(self):
         self.assertEqual(self.sll.remove_at_index(1), "Some Data - Node 1")
         self.assertEqual(self.sll[1], "Some Data - Node 2")

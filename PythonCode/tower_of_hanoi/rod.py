@@ -1,4 +1,4 @@
-""""""
+"""This module implements Rod object."""
 
 from __future__ import annotations
 from typing import Optional, Tuple
@@ -18,15 +18,17 @@ class Rod(Stack):
     def __add_self_to_members_dictionary(self) -> None:
         Rod.members_dictionary[self.name] = self
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
     def push_disk_on_top(self, disk: Disk) -> bool:
         current_top_disk = self.peek_element_from_top()
 
-        if disk.check_if_disk_below_exists_and_or_is_bigger(current_top_disk):
-            super().push_element_on_top(disk)
+        if disk.check_if_target_disk_below_exists_and_is_bigger(current_top_disk):
+            self.push_element_on_top(disk)
             return True
 
         return False
 
-    @property
-    def name(self) -> str:
-        return self.__name
+

@@ -10,7 +10,8 @@ class Disk:
     def size(self) -> int:
         return self.__size
 
-    def check_if_disk_below_exists_and_or_is_bigger(self, disk_below: Optional[Disk]) -> bool:
+    def check_if_target_disk_below_exists_and_is_bigger(
+            self, disk_below: Optional[Disk]) -> bool:
         """Returns True if disk can be moved onto a specified rod.
 
         Takes a disk from a rod to which the current disk is supposed to be
@@ -20,8 +21,9 @@ class Disk:
         2.  If the disk below exists and is bigger - returns True.
         3.  If the disk below exists and is smaller - returns False.
 
-        :param disk_below: peeked from the rod onto which the current disk
-            is supposed to be moved to.
+        Args:
+            disk_below: peeked from the rod onto which the current disk
+                is supposed to be moved to.
         """
         try:
             if disk_below.size > self.size:

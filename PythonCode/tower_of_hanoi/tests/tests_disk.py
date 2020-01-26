@@ -13,13 +13,13 @@ class TestDisk(unittest.TestCase):
         self.assertEqual(self.big_disk.size, 12)
 
     def test_check_if_there_is_disk_below_returns_true_with_no_disk(self):
-        self.assertTrue(self.small_disk.check_if_disk_below_exists_and_or_is_bigger(None))
+        self.assertTrue(self.small_disk.check_if_target_disk_below_exists_and_is_bigger(None))
 
     def test_check_if_there_is_disk_below_returns_true_with_bigger_disk(self):
-        self.assertTrue(self.small_disk.check_if_disk_below_exists_and_or_is_bigger(self.big_disk))
+        self.assertTrue(self.small_disk.check_if_target_disk_below_exists_and_is_bigger(self.big_disk))
 
     def test_check_if_there_is_disk_below_returns_false_with_smaller_disk(self):
-        self.assertFalse(self.big_disk.check_if_disk_below_exists_and_or_is_bigger(self.small_disk))
+        self.assertFalse(self.big_disk.check_if_target_disk_below_exists_and_is_bigger(self.small_disk))
 
 
 if __name__ == "__main__":

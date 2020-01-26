@@ -121,6 +121,7 @@ class SinglyLinkedList:
             # Therefore you need to traverse the whole list to get to the second to last item.
             second_to_last_node = self.__get_node_at_index(self.__size-2)
             self.__tail = second_to_last_node
+            second_to_last_node.next = None
 
         self.__size -= 1
 
