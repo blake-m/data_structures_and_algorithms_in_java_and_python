@@ -16,6 +16,8 @@ class TextGUI:
             "get_solver": self.ask_player_who_solves,
             "show_state": self.show_current_state,
             "get_wait_time": self.ask_player_wait_time_each_algorithm_step,
+            "show_source_choice": self.show_source_choice,
+            "show_destination_choice": self.show_destination_choice,
             "source_choose_again": self.ask_player_choose_source_rod_again,
             "destination_choose_again": self.ask_player_choose_destination_rod_again,
             "game_won": self.show_congratulations,
@@ -26,7 +28,7 @@ class TextGUI:
 
     def ask_player_difficulty_level(self) -> int:
         # Prompt player for it and convert to int
-        return 12
+        return 6
 
     def ask_player_wait_time_each_algorithm_step(self):
         return 0
@@ -61,6 +63,12 @@ class TextGUI:
             return False
         print("Invalid Choice. Let's try one more time")
         TextGUI.ask_player_play_again()
+
+    def show_source_choice(self, player_source_choice):
+        print('Source:', player_source_choice)
+
+    def show_destination_choice(self, player_destination_choice):
+        print('Destination:', player_destination_choice)
 
     def show_current_state(self):
         print('\n' * 25)
