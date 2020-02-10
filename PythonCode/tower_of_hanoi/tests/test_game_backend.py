@@ -161,11 +161,7 @@ class TestGameInitialized(unittest.TestCase):
     def test_change_disks_location_from_one_rod_to_another_removes_element(self):
         # I provide only correct strings as their validity is
         # thoroughly tested by other functions.
-        disk_moved = self.game.rod1.peek_element_from_top()
         self.game.change_disks_location_from_one_rod_to_another('left', 'right')
-        print(self.game.rod1.get_size())
-        print(self.game.rod2.get_size())
-        print(self.game.rod3.get_size())
         self.assertEqual(2, self.game.rod1.peek_element_from_top().size)
         self.assertEqual(1, self.game.rod3.peek_element_from_top().size)
         self.assertEqual(4, self.game.rod1.get_size())
@@ -239,8 +235,10 @@ class TestGameInitialized(unittest.TestCase):
         # Time is mocked to not wait for every move
         with mock.patch('time.sleep') as sleep_mock:
             for difficulty in range(1, 13):
-                _gdf_difficulty_mock.return_value = difficulty
-                game = Game(_gui_func_dict)
+                _gdf_difficulty_mock_isolated = mock.Mock(return_value=difficulty)
+                _gui_func_dict_isolated = copy.deepcopy(_gui_func_dict)
+                _gui_func_dict_isolated['difficulty'] = _gdf_difficulty_mock_isolated
+                game = Game(_gui_func_dict_isolated)
                 self.game.auto_solve_algorithm(difficulty, 'left', 'right', 'central')
                 _gdf_difficulty_mock.assert_called()
                 _gdf_get_wait_time_mock.assert_called()
@@ -250,16 +248,18 @@ class TestGameInitialized(unittest.TestCase):
         # Time is mocked not to wait for every move
         with mock.patch('time.sleep') as sleep_mock:
             for difficulty in range(1, 13):
-                _gdf_difficulty_mock_separated = mock.Mock(return_value=difficulty)
-                _gui_func_dict_separated = copy.deepcopy(_gui_func_dict)
-                _gui_func_dict_separated['difficulty'] = _gdf_difficulty_mock_separated
-                _gdf_difficulty_mock.return_value = difficulty
-                game = Game(_gui_func_dict_separated)
+                _gdf_difficulty_mock_isolated = mock.Mock(return_value=difficulty)
+                _gui_func_dict_isolated = copy.deepcopy(_gui_func_dict)
+                _gui_func_dict_isolated['difficulty'] = _gdf_difficulty_mock_isolated
+                game = Game(_gui_func_dict_isolated)
                 self.assertEqual(difficulty, game.rod1.get_size())
                 self.game.auto_solve_algorithm(difficulty, 'left', 'right', 'central')
                 self.assertEqual(0, game.rod1.get_size())
                 self.assertEqual(0, game.rod2.get_size())
                 self.assertEqual(difficulty, game.rod3.get_size())
+
+    # TODO(blake): test run_player_solved_game, run_algorithm_self_solved_game,
+    #  start_game
 
 
 if __name__ == '__main__':

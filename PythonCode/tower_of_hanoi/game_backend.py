@@ -8,8 +8,20 @@ with gui_functions lets backend steer what is displayed and, as said,
 allows other GUIs to be used.
 
 List of functions that need to be implemented in a GUI:
-# TODO(blake) make a list of these
-
+    - "difficulty": ask player about difficulty level
+    - "get_solver": ask player who the solver is (player or self-solving-algo
+    - "show_state": show current state of the game
+    - "get_wait_time": how much should the algorithm wait after each step for
+            player to observe the solution
+    - "show_source_choice": present currently chosen source rod
+    - "show_destination_choice": present currently chosen destination rod
+    - "source_choose_again": choose the source again if the first choice is
+            incorrect
+    - "destination_choose_again": choose the destination again if the first
+            choice is incorrect
+    - "game_won": show congratulations to the user
+    - "play_again": ask the player if they want to play again
+    - "restart": restartuje gre
 """
 
 from __future__ import annotations
@@ -28,7 +40,7 @@ class Game:
     Maximal number of disks allowed is 12.
 
     The game has an option of "solving itself". For more details look at
-    'self.start_game()' and 'self.auto_solve_algorithm' methods.
+    'self.start_game()' and 'self.auto_solve_algorithm()' methods.
     """
     def __init__(self, gui_functions: dict) -> None:
         self.rod1 = Rod('left')
@@ -40,8 +52,9 @@ class Game:
         # by specifying a key and simply call it.
         self.gui_funcs = gui_functions
 
-        # Waiting time before self-solving algorithms steps.
-        self.wait_time = self.gui_funcs['get_wait_time']()
+        # Waiting time before self-solving algorithms steps. Set when player
+        # chooses to observe the algorithm solve the game.
+        self.wait_time = None
 
         self.number_of_disks = self.gui_funcs['difficulty']()
         self.initialize_by_adding_first_disks_to_left_rod()
@@ -155,13 +168,8 @@ class Game:
             choice_source_rod].peek_element_from_top()
         choice_destination_rod = self.get_destination_rod(disk_from_source_rod)
 
-        # TODO(blake): make sure this recursion is not needed and delete it if so.
-        #  Otherwise delete the print and use gui func instead.
         if choice_source_rod != choice_destination_rod:
             return choice_source_rod, choice_destination_rod
-
-        print("You can't choose the same rod twice. Choose again! ;)")
-        self.ask_player_for_destination_and_source_rods()
 
     def change_disks_location_from_one_rod_to_another(
             self, source: str, destination: str
@@ -222,7 +230,7 @@ class Game:
         self.auto_solve_algorithm(n_disks - 1, placeholder, destination, source)
         self.gui_funcs["show_state"]()
 
-    def play_again_if_player_wants_to(self):
+    def play_again_if_player_wants_to(self) -> None:
         """Asks the player if he/she wants to play again and
         restarts the game if so.
         """
@@ -230,18 +238,39 @@ class Game:
         if play_again:
             self.gui_funcs['restart']()
 
+    def run_player_solved_game(self) -> None:
+        """Loops over player's moves and checks if the game is won every time.
+
+        The loop checks for the winning condition: whether the right rod
+        is filled with all disks and the other rods are empty. In each loop
+        asks player to make the move and displays the current state of
+        the game.
+
+        When the game is won, asks the player if they want to play again."""
+        while not self.check_if_right_rod_full_and_others_empty():
+            self.gui_funcs['show_state']()
+            self.make_move()
+        self.gui_funcs['game_won']()
+        self.play_again_if_player_wants_to()
+
+    def run_algorithm_self_solved_game(self) -> None:
+        """Starts the self-solving algorithm and asks the player if they want
+        to run the algorithm again or play the game themselves after
+        the algorithm finishes."""
+        self.wait_time = self.gui_funcs['get_wait_time']()
+        self.auto_solve_algorithm(self.number_of_disks, 'left', 'right', 'central')
+        self.play_again_if_player_wants_to()
+
     def start_game(self) -> None:
-        """Starts the game and runs it until winning conditions are satisfied."""
+        """Starts the game and runs it until winning conditions are satisfied.
+
+        Calls gui function to establish who the solver should be:
+        self-solving-algorithm or the player. In each case, calls appropriate
+        function which starts the game."""
         solver = self.gui_funcs['get_solver']()
 
         if solver == 'y':
-            while not self.check_if_right_rod_full_and_others_empty():  # Winning condition
-                self.gui_funcs['show_state']()
-                self.make_move()
-            self.gui_funcs['game_won']()
-            self.play_again_if_player_wants_to()
+            self.run_player_solved_game()
 
         elif solver == 'a':
-            while not self.check_if_right_rod_full_and_others_empty():  # Winning condition
-                self.auto_solve_algorithm(self.number_of_disks, 'left', 'right', 'central')
-            self.play_again_if_player_wants_to()
+            self.run_algorithm_self_solved_game()

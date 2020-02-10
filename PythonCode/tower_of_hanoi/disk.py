@@ -1,3 +1,4 @@
+"""This module contains a Disk class for Tower of Hanoi game."""
 from __future__ import annotations
 from typing import Optional, Tuple
 
@@ -32,5 +33,5 @@ class Disk:
         except AttributeError:
             return True   # Disk below doesn't exist
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.size)
