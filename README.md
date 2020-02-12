@@ -14,6 +14,8 @@ Engineer) code coming from his wonderful series of tutorials on DS&A.
 - Singly (Python) & Doubly Linked List (Java)
 - Stack (Both)
 - Queue (Java)
+- Priority Queue (Java)
+- Heaps (Java)
 
 ### Small projects:
 - Tower of Hanoi in Python - my simple version of the game + algorithm solving it
