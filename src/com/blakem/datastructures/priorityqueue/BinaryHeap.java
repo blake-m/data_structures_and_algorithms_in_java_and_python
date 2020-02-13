@@ -38,11 +38,15 @@ public class BinaryHeap<T extends Comparable<T>> {
         return currentHeapSize;
     }
 
-    public T peekRoot() {
+    public T peekAt(int position) {
         if (isEmpty()) {
             return null;
         }
-        return heapElementsList.get(0);
+        return heapElementsList.get(position);
+    }
+
+    public T peekRoot() {
+        return peekAt(0);
     }
 
     public T poll() {
@@ -51,11 +55,20 @@ public class BinaryHeap<T extends Comparable<T>> {
 
     public boolean contains(T elemToCheck) {
         for (T element: heapElementsList) {
-            if (elemToCheck == element) {
+            if (elemToCheck.equals(element)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public int returnIndexOfFirstSuchElement(T elemToFind) {
+        for (int index = 0; index < currentHeapSize; index++) {
+            if (elemToFind.equals(heapElementsList.get(index))) {
+                return index;
+            }
+        }
+        return -1;
     }
 
     public void add(T elem) throws IllegalArgumentException {
@@ -75,7 +88,7 @@ public class BinaryHeap<T extends Comparable<T>> {
 
 
     private boolean
-    arg1_associated_list_value_is_smaller_than_arg2_list_value(
+    arg1AssociatedListValueIsSmallerThanArg2ListValue(
             int nodeIndex1, int nodeIndex2) {
         T node1 = heapElementsList.get(nodeIndex1);
         T node2 = heapElementsList.get(nodeIndex2);
@@ -87,7 +100,7 @@ public class BinaryHeap<T extends Comparable<T>> {
         int rootPosition = 0;
 
         while (nodePosition > rootPosition
-                && arg1_associated_list_value_is_smaller_than_arg2_list_value(
+                && arg1AssociatedListValueIsSmallerThanArg2ListValue(
                         nodePosition, nextParentNodePosition)) {
             swap(nextParentNodePosition, nodePosition);
             nodePosition = nextParentNodePosition;
@@ -105,7 +118,7 @@ public class BinaryHeap<T extends Comparable<T>> {
 
             // break if can't sink further
             if (smallestChildNodePosition <= currentHeapSize
-                || arg1_associated_list_value_is_smaller_than_arg2_list_value(
+                || arg1AssociatedListValueIsSmallerThanArg2ListValue(
                     nodePosition, smallestChildNodePosition)) {
                 break;
             }
@@ -164,14 +177,14 @@ public class BinaryHeap<T extends Comparable<T>> {
 
 
         if (leftChildNodePosition < currentHeapSize
-            && !arg1_associated_list_value_is_smaller_than_arg2_list_value(
+            && !arg1AssociatedListValueIsSmallerThanArg2ListValue(
                     currentPosition, leftChildNodePosition
         )) {
             return false;
         }
 
         if (rightChildNodePosition < currentHeapSize
-                && !arg1_associated_list_value_is_smaller_than_arg2_list_value(
+                && !arg1AssociatedListValueIsSmallerThanArg2ListValue(
                 currentPosition, rightChildNodePosition
         )) {
             return false;
