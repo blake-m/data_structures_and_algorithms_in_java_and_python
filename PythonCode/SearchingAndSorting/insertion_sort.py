@@ -1,6 +1,6 @@
 """My implementation of insertion sort algorithm.
 
-An assumption is made that the arrays provided are integers.
+An assumption is made that the arrays provided are lists of integers.
 """
 from typing import List
 
